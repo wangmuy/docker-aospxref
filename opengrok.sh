@@ -19,7 +19,7 @@ myport=$OPENGROK_PORT
 
 [ ! -d $opengrokDir ] && mkdir -p $opengrokDir
 
-$DEBUG docker run -d --name opengrok-$AOSP_BRANCH \
+$DEBUG docker run -it --name opengrok-$AOSP_BRANCH \
     -v $aospDir:/src \
     -v $opengrokDir:/data \
     -p $myport:8080 \
