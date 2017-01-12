@@ -5,7 +5,7 @@
 # Author: Kyle Manna <kyle@kylemanna.com>
 #
 
-DEBUG=echo
+#DEBUG=echo
 set -e
 
 # Override from environment

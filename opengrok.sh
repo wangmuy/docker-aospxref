@@ -1,5 +1,5 @@
 #!/bin/sh
-DEBUG=echo
+#DEBUG=echo
 set -ex
 
 [ -z "$AOSP_BRANCH" ] && \
