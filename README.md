@@ -4,5 +4,5 @@ Require kylemanna/aosp and scue/docker-opengrok docker images.
 
 Usage:
 ```text
-sudo sh -c 'env `cat env-test` ./opengrok.sh'
+sudo sh -c 'env `cat env-test` ./syncandup.sh'
 ```
