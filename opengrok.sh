@@ -21,7 +21,7 @@ myport=$OPENGROK_PORT
 [ ! -d $opengrokDir ] && mkdir -p $opengrokDir
 
 myName="opengrok-$AOSP_BRANCH"
-container=$(${SUDO} docker ps -q -f name=${myName})
+container="$(${SUDO} docker ps -aq -f name=${myName})"
 if [ -n "$container" ]; then
 $SUDO $DEBUG docker start -a $container
 else
