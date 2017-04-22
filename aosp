@@ -6,6 +6,7 @@
 #
 
 #DEBUG=echo
+unset SUDO && [ "$(id -u)" != "0" ] && SUDO=sudo
 set -e
 
 # Override from environment
@@ -51,6 +52,6 @@ fi
 
 echo ""
 
-$DEBUG docker run $AOSP_ARGS $AOSP_HOST_ID_ARGS $SSH_AUTH_ARGS $AOSP_EXTRA_ARGS \
+$SUDO $DEBUG docker run $AOSP_ARGS $AOSP_HOST_ID_ARGS $SSH_AUTH_ARGS $AOSP_EXTRA_ARGS \
     -v "$AOSP_VOL_AOSP:/aosp" -v "$AOSP_VOL_CCACHE:/tmp/ccache" \
     $AOSP_IMAGE $@

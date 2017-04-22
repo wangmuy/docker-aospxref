@@ -1,5 +1,6 @@
 #!/bin/sh
 #DEBUG=echo
+unset SUDO && [ "$(id -u)" != "0" ] && SUDO=sudo
 set -ex
 
 [ -z "$AOSP_BRANCH" ] && \
@@ -19,9 +20,14 @@ myport=$OPENGROK_PORT
 
 [ ! -d $opengrokDir ] && mkdir -p $opengrokDir
 
-$DEBUG docker run -it --name opengrok-$AOSP_BRANCH \
+myName="opengrok-$AOSP_BRANCH"
+container=$(${SUDO} docker ps -q -f name=${myName})
+if [ -n "$container" ]; then
+$SUDO $DEBUG docker start -a $container
+else
+$SUDO $DEBUG docker run -it --name opengrok-$AOSP_BRANCH \
     -v $aospDir:/src \
     -v $opengrokDir:/data \
     -p $myport:8080 \
     scue/docker-opengrok
-
+fi
