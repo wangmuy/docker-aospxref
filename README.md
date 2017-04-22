@@ -7,7 +7,7 @@ edit env-test:
 ```bash
 AOSP_BRANCH=android-7.0.0_r1
 AOSP_URL=https://aosp.tuna.tsinghua.edu.cn/platform/manifest
-AOSP_BASEDIR=/data/aospxref-7.0.0_r1
+AOSP_BASEDIR=~/myaosp
 OPENGROK_PORT=9001
 ```
 
