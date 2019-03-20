@@ -7,7 +7,11 @@
 
 #DEBUG=echo
 unset SUDO && [ "$(id -u)" != "0" ] && SUDO=sudo
-set -e
+# If in docker group, no sudo needed
+if id -nG | grep -qw docker; then
+  SUDO=
+fi
+set -xe
 
 # Override from environment
 
@@ -43,7 +47,7 @@ uid=$(id -u)
 
 # Set uid and gid to match host current user as long as NOT root
 if [ $uid -ne "0" ]; then
-    AOSP_HOST_ID_ARGS="-e USER_ID=$uid -e GROUP_ID=$(id -g)"
+    AOSP_HOST_ID_ARGS="-e USER_ID=$uid"
 fi
 
 if [ -S "$SSH_AUTH_SOCK" ]; then
@@ -52,6 +56,9 @@ fi
 
 echo ""
 
+if [ -n "$SUDO" ]; then
+    echo "Requring sudo privilege to run docker..."
+fi
 $SUDO $DEBUG docker run $AOSP_ARGS $AOSP_HOST_ID_ARGS $SSH_AUTH_ARGS $AOSP_EXTRA_ARGS \
     -v "$AOSP_VOL_AOSP:/aosp" -v "$AOSP_VOL_CCACHE:/tmp/ccache" \
     $AOSP_IMAGE $@
