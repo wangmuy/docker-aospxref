@@ -1,6 +1,10 @@
 #!/bin/sh
 #DEBUG=echo
 unset SUDO && [ "$(id -u)" != "0" ] && SUDO=sudo
+# If in docker group, no sudo needed
+if id -nG | grep -qw docker; then
+  SUDO=
+fi
 set -ex
 
 [ -z "$AOSP_BRANCH" ] && \
@@ -22,6 +26,10 @@ myport=$OPENGROK_PORT
 
 myName="opengrok-$AOSP_BRANCH"
 container="$(${SUDO} docker ps -aq -f name=${myName})"
+if [ -n "$SUDO" ]; then
+  echo "Requring sudo privilege to run docker..."
+fi
+
 if [ -n "$container" ]; then
 $SUDO $DEBUG docker start -a $container
 else
