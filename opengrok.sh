@@ -26,8 +26,12 @@ myport=$OPENGROK_PORT
 
 myName="opengrok-$AOSP_BRANCH"
 container="$(${SUDO} docker ps -aq -f name=${myName})"
+OPENGROK_IMAGE=scue/docker-opengrok
 if [ -n "$SUDO" ]; then
   echo "Requring sudo privilege to run docker..."
+fi
+if ! docker image inspect kylemanna/aosp > /dev/null 2>&1; then
+  $SUDO $DEBUG docker pull $OPENGROK_IMAGE
 fi
 
 if [ -n "$container" ]; then
@@ -37,5 +41,5 @@ $SUDO $DEBUG docker run -it --name opengrok-$AOSP_BRANCH \
     -v $aospDir:/src \
     -v $opengrokDir:/data \
     -p $myport:8080 \
-    scue/docker-opengrok
+    $OPENGROK_IMAGE
 fi

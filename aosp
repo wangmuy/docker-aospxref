@@ -59,6 +59,9 @@ echo ""
 if [ -n "$SUDO" ]; then
     echo "Requring sudo privilege to run docker..."
 fi
+if ! docker image inspect kylemanna/aosp > /dev/null 2>&1; then
+    $SUDO $DEBUG docker pull $AOSP_IMAGE
+fi
 $SUDO $DEBUG docker run $AOSP_ARGS $AOSP_HOST_ID_ARGS $SSH_AUTH_ARGS $AOSP_EXTRA_ARGS \
     -v "$AOSP_VOL_AOSP:/aosp" -v "$AOSP_VOL_CCACHE:/tmp/ccache" \
     $AOSP_IMAGE $@
