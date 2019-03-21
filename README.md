@@ -12,7 +12,7 @@ OPENGROK_PORT=9001
 ```
 
 ```text
-sudo sh -c 'env `cat env-test` ./syncandup.sh'
+env `cat env-test` ./syncandup.sh
 ```
 
 The above script will download aosp 8.0.0_r4 repo and setup a opengrok site on port 9001.
